@@ -19,3 +19,22 @@ export async function GET() {
         return Response.json({ message: "Internal Server Error", error: error.message }, { status: 500 });
     }
 }
+
+// PATCH request to update order status
+export async function PATCH(req) {
+    try {
+        const { OrderID, Status } = await req.json();
+
+        if (!OrderID || !Status) {
+            return Response.json({ message: "Missing required fields" }, { status: 400 });
+        }
+
+        // Update the order status in the database
+        await pool.query("UPDATE Customer SET Status = ? WHERE OrderID = ?", [Status, OrderID]);
+
+        return Response.json({ message: "Order status updated successfully" }, { status: 200 });
+    } catch (error) {
+        console.error("Database Error:", error);
+        return Response.json({ message: "Internal Server Error", error: error.message }, { status: 500 });
+    }
+}
