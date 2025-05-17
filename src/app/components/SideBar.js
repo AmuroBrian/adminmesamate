@@ -11,12 +11,10 @@ const Sidebar = () => {
                 <Link href="/" className="flex items-center gap-2 hover:text-gray-700">
                     <span>📋</span> Order Management
                 </Link>
-                <Link href="/notifications" className="flex items-center gap-2 hover:text-gray-700">
+                <Link href="/hello" className="flex items-center gap-2 hover:text-gray-700">
                     <span>🔔</span> Notifications
                 </Link>
-                <Link href="/logout" className="flex items-center gap-2 hover:text-gray-700">
-                    <span>🚪</span> Log out
-                </Link>
+                
             </nav>
         </div>
     );
