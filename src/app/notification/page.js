@@ -1,15 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import { FiRefreshCw } from 'react-icons/fi';
 
 export default function NotificationPage() {
     const [notifications, setNotifications] = useState([]);
@@ -33,44 +25,41 @@ export default function NotificationPage() {
     }, []);
 
     return (
-        <div className="container mx-auto py-8">
+        <div className="p-6 bg-white min-h-screen">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">Notifications</h1>
-                <Button
+                <h1 className="text-2xl font-bold text-black">Notifications</h1>
+                <button
                     onClick={fetchNotifications}
                     disabled={loading}
+                    className="flex items-center gap-2 bg-green-600 px-4 py-2 rounded-md shadow-md hover:bg-green-700 disabled:opacity-50 transition-colors border-2 border-black"
                 >
-                    {loading ? 'Refreshing...' : 'Refresh'}
-                </Button>
+                    <FiRefreshCw className={`w-5 h-5 text-white ${loading ? 'animate-spin' : ''}`} />
+                    <span className="text-white">{loading ? 'Refreshing...' : 'Refresh'}</span>
+                </button>
             </div>
 
-            <div className="rounded-md border">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Table Number</TableHead>
-                            <TableHead>Message</TableHead>
-                            <TableHead>Time</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {notifications.map((notification, index) => (
-                            <TableRow key={index}>
-                                <TableCell>{notification.table_number}</TableCell>
-                                <TableCell>{notification.response}</TableCell>
-                                <TableCell>{new Date(notification.timestamp).toLocaleString()}</TableCell>
-                            </TableRow>
-                        ))}
-                        {notifications.length === 0 && (
-                            <TableRow>
-                                <TableCell colSpan={3} className="text-center">
-                                    No notifications found
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
+            {notifications.length === 0 ? (
+                <p className="text-black text-center py-8">No notifications found.</p>
+            ) : (
+                <div className="space-y-4">
+                    {notifications.slice().reverse().map((notification, index) => (
+                        <div
+                            key={index}
+                            className="bg-white p-6 rounded-lg shadow-lg border-2 border-black"
+                        >
+                            <h2 className="text-xl font-semibold text-black mb-3">
+                                Table #{notification.table_number}
+                            </h2>
+                            <div className="mt-3">
+                                <p className="text-black text-lg">{notification.response}</p>
+                                <p className="text-black text-sm mt-2">
+                                    {new Date(notification.timestamp).toLocaleString()}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 } 

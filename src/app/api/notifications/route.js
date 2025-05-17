@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import pool from '@/script/mysqldb';
+import pool from './../../../../script/mysqldb';
 
 export async function GET() {
     try {

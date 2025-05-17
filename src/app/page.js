@@ -57,7 +57,7 @@ export default function OrdersAdmin() {
   };
 
   return (
-    <div className="p-6 bg-yellow-400">
+    <div className="p-6 bg-white">
       <h1 className="text-2xl font-bold mb-4 text-black">Orders</h1>
       {orders.length === 0 ? (
         <p className="text-white">No orders found.</p>
